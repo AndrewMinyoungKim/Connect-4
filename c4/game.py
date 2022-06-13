@@ -12,6 +12,7 @@ class Game:
         self.turn = RED
         self.board = Board()
         self.board.new_board(win, state)
+        self.champ = None
 
     def reset(self):
         self._init()
@@ -20,7 +21,8 @@ class Game:
         pygame.display.update()
 
     def winner(self, colour):
-        print("WINNER: ", colour)
+        self.champ = colour
+        print("WINNER: ", self.champ)
 
     def mouseclick(self, row, col):
 
@@ -67,9 +69,8 @@ class Game:
 
                 #check for win
                 if counter >= 4:
-                    straight_win = True
                     self.winner(colour)
-                    return straight_win
+                    return True
 
                 #break the chain
                 if counter != 0 and self.state[x][y] != colour:
@@ -93,9 +94,8 @@ class Game:
 
                 #check for win
                 if counter >= 4:
-                    straight_win = True
                     self.winner(colour)
-                    return straight_win
+                    return True
 
                 #break the chain
                 if counter != 0 and self.state[x][y] != colour:
@@ -128,6 +128,56 @@ class Game:
         # for y in range(COL):
         #     for x in range(ROW-1):
         #         pass
+
+        # diagonal NE
+        for x in range(ROW-1):
+            i = x
+            j = 0
+            while i+3 < 6 and j+3 < 7:
+                if self.state[i][j] == self.state[i+1][j+1] == self.state[i+2][j+2] == self.state[i+3][j+3] and self.state[i][j] != WHITE:
+                    colour = self.state[i][j]
+                    self.winner(colour)
+                    return True
+                
+                i += 1
+                j += 1
+
+        for y in range(1, COL):
+            i = 0
+            j = y
+            while i+3 < 6 and j+3 < 7:
+                if self.state[i][j] == self.state[i+1][j+1] == self.state[i+2][j+2] == self.state[i+3][j+3] and self.state[i][j] != WHITE:
+                    colour = self.state[i][j]
+                    self.winner(colour)
+                    return True
+
+                i += 1
+                j += 1
+
+        #diagonal SE
+        for x in range(3, ROW-1):
+            i = x
+            j = 0
+            while i-3 >= 0 and j+3 < 7:
+                if self.state[i][j] == self.state[i-1][j+1] == self.state[i-2][j+2] == self.state[i-3][j+3] and self.state[i][j] != WHITE:
+                    colour = self.state[i][j]
+                    self.winner(colour)
+                    return True
+                
+                i -= 1
+                j += 1
+
+        for y in range(1, COL):
+            i = ROW-2
+            j = COL
+            while i-3 >= 0 and j+3 < 7:
+                if self.state[i][j] == self.state[i-1][j+1] == self.state[i-2][j+2] == self.state[i-3][j+3] and self.state[i][j] != WHITE:
+                    colour = self.state[i][j]
+                    self.winner(colour)
+                    return True
+                
+                i -= 1
+                j += 1
         
         
         #win = straight_win or diagonal_win
