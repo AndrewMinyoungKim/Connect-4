@@ -1,6 +1,6 @@
 import pygame
 
-from c4 import WIDTH, HEIGHT, SQUARE_SIZE
+from c4 import WIDTH, HEIGHT, SQUARE_SIZE, RED, YELLOW
 from c4.game import Game
 
 class Play:
@@ -18,6 +18,7 @@ class Play:
         self.done = False
         self.clock = pygame.time.Clock()
         self.game = Game(self.window)
+        self.result = True
 
         while not self.done:
 
@@ -26,6 +27,7 @@ class Play:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True
+                    self.result = False
                     
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.pos = pygame.mouse.get_pos()
@@ -35,7 +37,20 @@ class Play:
 
             self.game.update()
         
-        pygame.quit()
+
+        if self.result:
+            if(self.game.champ == RED):
+                print("WINNER: RED")
+            elif(self.game.champ == YELLOW):
+                print("WINNER: YELLOW")
+            else:
+                print("SOMETHING WENT WRONG!")
+
+        while self.result:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.result = False
+                    pygame.quit()
 
 if __name__ == '__main__':
     play = Play()

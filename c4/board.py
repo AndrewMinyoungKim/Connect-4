@@ -28,10 +28,10 @@ class Board:
                 state[row].append(WHITE)
         
         #TESTING
-        self.print_state(state)
+        #self.print_state(state)
         
     #TESTING
-    def print_state(self, state):
-        for row in range(ROW-1):
-            for col in range(COL):
-                print(str(row) + ", " + str(col) + ": ", state[row][col])
+    # def print_state(self, state):
+    #     for row in range(ROW-1):
+    #         for col in range(COL):
+    #             print(str(row) + ", " + str(col) + ": ", state[row][col])

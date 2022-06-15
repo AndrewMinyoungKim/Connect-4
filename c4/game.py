@@ -22,7 +22,7 @@ class Game:
 
     def winner(self, colour):
         self.champ = colour
-        print("WINNER: ", self.champ)
+        #print("WINNER: ", self.champ)
 
     def mouseclick(self, row, col):
 
@@ -38,7 +38,7 @@ class Game:
 
                     self.state[available_row][col] = self.turn
 
-                    self.board.print_state(self.state)
+                    #self.board.print_state(self.state)
 
                     if(self.check_win()):
                         return True
@@ -111,24 +111,6 @@ class Game:
                     counter += 1
                     colour = self.state[x][y]
 
-        #check for diagonal wins
-        # for x in range(3):
-        #     counter = 0
-        #     colour = WHITE
-        #     j = 0
-        #     for i in range(ROW-1):
-                
-        #         if(self.state[i][j] == colour and self.state != WHITE):
-        #             counter += 1
-        #             if(counter >= 4):
-        #                 return True
-        #         else:
-        #             counter = 0
-
-        # for y in range(COL):
-        #     for x in range(ROW-1):
-        #         pass
-
         # diagonal NE
         for x in range(ROW-1):
             i = x
@@ -155,7 +137,7 @@ class Game:
                 j += 1
 
         #diagonal SE
-        for x in range(3, ROW-1):
+        for x in range(0, ROW-1):
             i = x
             j = 0
             while i-3 >= 0 and j+3 < 7:
@@ -169,7 +151,7 @@ class Game:
 
         for y in range(1, COL):
             i = ROW-2
-            j = COL
+            j = y
             while i-3 >= 0 and j+3 < 7:
                 if self.state[i][j] == self.state[i-1][j+1] == self.state[i-2][j+2] == self.state[i-3][j+3] and self.state[i][j] != WHITE:
                     colour = self.state[i][j]
